@@ -25,6 +25,11 @@ const (
 	heartbeatInterval   = 1 * time.Second
 )
 
+var (
+	StartupTopic    string
+	StartupFunction *interface{}
+)
+
 type runner struct {
 	state string
 
@@ -515,7 +520,10 @@ func (r *slaveRunner) run() {
 		}
 		return
 	}
-
+	if StartupFunction != nil {
+		Events.SubscribeOnceAsync(StartupTopic, StartupFunction)
+	}
+	Events.WaitAsync()
 	// listen to master
 	r.startListener()
 
