@@ -1,3 +1,4 @@
+//go:build goczmq
 // +build goczmq
 
 package boomer
@@ -135,7 +136,8 @@ func (c *czmqSocketClient) sendMessage(msg message) {
 	}
 	err = c.dealerSocket.SendFrame(serializedMessage, goczmq.FlagNone)
 	if err != nil {
-		log.Printf("Error sending: %v\n", err)
+		c.fromMaster <- newGenericMessage("quit", nil, "")
+		log.Printf("send message to master error, must quit worker, err=%v\n", err)
 	}
 }
 
