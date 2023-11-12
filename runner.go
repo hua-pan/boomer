@@ -21,7 +21,7 @@ const (
 )
 
 const (
-	slaveReportInterval = 3 * time.Second
+	slaveReportInterval = 2 * time.Second
 	heartbeatInterval   = 1 * time.Second
 )
 
